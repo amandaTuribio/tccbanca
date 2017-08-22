@@ -9,10 +9,15 @@ CREATE TABLE orientador(ori_id BIGINT NOT NULL AUTO_INCREMENT,
                         CONSTRAINT PK_orientador PRIMARY KEY(ori_id),
                         CONSTRAINT UNQ_orientador_email UNIQUE(ori_email));
                         
-CREATE TABLE curso(curs_id BIGINT NOT NULL,
+CREATE TABLE curso(curs_id BIGINT NOT NULL AUTO_INCREMENT,
                    curs_nome VARCHAR(300) NOT NULL,
 				   CONSTRAINT PK_curso PRIMARY KEY(curs_id),
                    CONSTRAINT UNQ_curso UNIQUE(curs_nome));
+                   
+INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS');
+INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM AUTOMAÇÃO INDUSTRIAL');
+INSERT INTO curso(curs_nome)VALUES('LICENCIATURA EM MATEMÁTICA');
+INSERT INTO curso(curs_nome)VALUES('BACHARELADO EM ENGENHARIA DE CONTROLE E AUTOMAÇÃO');
                    
 CREATE TABLE aluno(alun_pront BIGINT NOT NULL,
                    alun_nome VARCHAR(100) NOT NULL,
