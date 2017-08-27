@@ -1,7 +1,9 @@
 create database bdtcc;
 
+
 use bdtcc;
 
+SET SQL_SAFE_UPDATES = 0;
 CREATE TABLE orientador(ori_id BIGINT NOT NULL AUTO_INCREMENT,
                         ori_nome VARCHAR(100) NOT NULL,
 						ori_email VARCHAR(200) NOT NULL,
@@ -78,6 +80,13 @@ CREATE TABLE certificado(certf_id BIGINT NOT NULL AUTO_INCREMENT,
 						 CONSTRAINT FK_certificado_tcc FOREIGN KEY(certf_tcc_id) REFERENCES tcc(tcc_id));
                    
                    
+                   select * from curso;
+                   select * from aluno;
+                   delete from aluno;
+                   delete from curso where curs_id >4;
+                   
+                   
+               truncate table curso;
                    
                    
                     
