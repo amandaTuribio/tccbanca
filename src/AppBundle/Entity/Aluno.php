@@ -26,7 +26,7 @@ class Aluno {
    
     
     /**
-     * @ORM\Column(type="integer",name="alun_pront")
+     * @ORM\Column(type="string",length=10,name="alun_pront")
      * @ORM\Id
      */
     private $prontuario;
@@ -49,6 +49,8 @@ class Aluno {
      */
     private $curso;
     
+    
+
     
     function __construct($prontuario, $nome, $email, $curso) {
         $this->prontuario = $prontuario;
@@ -89,6 +91,8 @@ class Aluno {
     function setCurso($curso) {
         $this->curso = $curso;
     }
+
+
 
 
 

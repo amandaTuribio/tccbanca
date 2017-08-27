@@ -7,7 +7,7 @@
  */
 
 /**
- * Description of AlunoDAO
+ * Description of OrientadorDAO
  *
  * @author Gabriel Martins
  */
@@ -19,9 +19,9 @@ use Doctrine\ORM\EntityManager;
 
 use AppBundle\DAO\GenericDAO;
 
-use AppBundle\Entity\Aluno;
+use AppBundle\Entity\Orientador;
 
-class AlunoDAO extends GenericDAO {
+class OrientadorDAO extends GenericDAO {
    
     public function __construct(EntityManager $entityManager) {
         parent::__construct($entityManager);
@@ -29,23 +29,23 @@ class AlunoDAO extends GenericDAO {
     
     
     public function alterar($id,$entity) {
-        $aluno = $this->entityManager->getRepository(Aluno::class)->find($id);
-        $aluno->setProntuario($entity->getProntuario());
-        $aluno->setNome($entity->getNome());
-        $aluno->setEmail($entity->getNome());
-        $aluno->setCurso($entity->getCurso());
+        $orientador = $this->entityManager->getRepository(Orientador::class)->find($id);
+        $orientador->setId($entity->getId());
+        $orientador->setNome($entity->getNome());
+        $orientador->setEmail($entity->getNome());
+        $orientador->setSenha($entity->getSenha());
         $this->entityManager->flush();
     }
     
     public function pesquisar($id) {
-        $entity = $this->entityManager->getRepository(Aluno::class)->find($id);
+        $entity = $this->entityManager->getRepository(Orientador::class)->find($id);
         return $entity;
     }
     
      public function listarTodos() {
-        $repository =  $this->entityManager->getRepository(Aluno::class);
-        $alunos = $repository->findAll();
-        return $alunos;
+        $repository =  $this->entityManager->getRepository(Orientador::class);
+        $orientadores = $repository->findAll();
+        return $orientadores;
     }
     
 }

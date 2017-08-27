@@ -12,7 +12,7 @@
  * @author Gabriel
  */
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\AppBundle\Model;
 
 use PHPUnit\Framework\TestCase;
 
@@ -37,14 +37,10 @@ class TCCTest extends TestCase{
    }
    
    public function testTccPossuiDados(){
-       $tcc = new TCC("Titulo TCC",$this->aluno,$this->orientador);
-       
+       $tcc = new TCC("Titulo TCC",$this->orientador);
+       $tcc->adicionarAluno($this->aluno);
        $this->assertEquals("Titulo TCC", $tcc->getTitulo());
-       $this->assertEquals($this->aluno->getProntuario(), $tcc->getAluno()->getProntuario());
-       $this->assertEquals($this->aluno->getNome(), $tcc->getAluno()->getNome());
-       $this->assertEquals($this->aluno->getEmail(), $tcc->getAluno()->getEmail());
-       $this->assertEquals($this->aluno->getCurso()->getId(), $tcc->getAluno()->getCurso()->getId());
-       $this->assertEquals($this->aluno->getCurso()->getNome(), $tcc->getAluno()->getCurso()->getNome());
+       $this->assertNotNull($tcc->getAlunos());
        $this->assertEquals($this->orientador->getId(), $tcc->getOrientador()->getId());
        $this->assertEquals($this->orientador->getEmail(), $tcc->getOrientador()->getEmail());
        $this->assertEquals($this->orientador->getSenha(), $tcc->getOrientador()->getSenha());

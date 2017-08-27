@@ -12,21 +12,62 @@
  * @author Gabriel Martins
  */
 
+
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="tcc")
+ */
 class TCC {
    
+    
+    /**
+     * @ORM\Column(type="integer",name="tcc_id")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
+    
+    /**
+     * @ORM\Column(type="string", length=300,name="tcc_titulo")
+     */
     private $titulo;
-    private $aluno;
+    
+
+      /**
+     * @ORM\ManyToMany(targetEntity="Aluno")
+     * @ORM\JoinTable(name="tcc_aluno",
+     *      joinColumns={@ORM\JoinColumn(name="tcc_alun_pront", referencedColumnName="aluno_pront")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tcc_id", referencedColumnName="tcc_id")}
+     *      )
+     */
+    private $alunos;
+    
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Orientador", inversedBy="tccs")
+     * @ORM\JoinColumn(name="tcc_id_orientador", referencedColumnName="ori_id")
+     */
     private $orientador;
-    private $status;
+    
+     /**
+     * @ORM\Column(type="boolean",name="tcc_aprov")
+     */
+    private $aprovado;
              
-    function __construct($titulo, $aluno, $orientador) {
+    function __construct($titulo, $orientador) {
+        $this->alunos = new ArrayCollection();
         $this->titulo = $titulo;
-        $this->aluno = $aluno;
         $this->orientador = $orientador;
+    }
+    
+    function adicionarAluno($aluno) {
+        $this->alunos->add($aluno);
     }
 
     
@@ -38,16 +79,16 @@ class TCC {
         return $this->titulo;
     }
 
-    function getAluno() {
-        return $this->aluno;
+    function getAlunos() {
+        return $this->alunos;
     }
 
     function getOrientador() {
         return $this->orientador;
     }
 
-    function getStatus() {
-        return $this->status;
+    function getAprovado() {
+        return $this->aprovado;
     }
 
     function setId($id) {
@@ -58,18 +99,22 @@ class TCC {
         $this->titulo = $titulo;
     }
 
-    function setAluno($aluno) {
-        $this->aluno = $aluno;
+    function setAlunos($alunos) {
+        $this->alunos = $alunos;
     }
 
     function setOrientador($orientador) {
         $this->orientador = $orientador;
     }
 
-    function setStatus($status) {
-        $this->status = $status;
+    function setAprovado($aprovado) {
+        $this->aprovado = $aprovado;
     }
 
+
+
+    
+    
 
     
     

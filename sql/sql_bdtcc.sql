@@ -1,3 +1,4 @@
+drop database if exists bdtcc;
 create database bdtcc;
 
 
@@ -21,7 +22,7 @@ INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM AUTOMAÇÃO INDUSTRIAL');
 INSERT INTO curso(curs_nome)VALUES('LICENCIATURA EM MATEMÁTICA');
 INSERT INTO curso(curs_nome)VALUES('BACHARELADO EM ENGENHARIA DE CONTROLE E AUTOMAÇÃO');
                    
-CREATE TABLE aluno(alun_pront BIGINT NOT NULL,
+CREATE TABLE aluno(alun_pront VARCHAR(10) NOT NULL,
                    alun_nome VARCHAR(100) NOT NULL,
                    alun_email VARCHAR(200) NOT NULL,
                    alun_id_curso BIGINT NOT NULL,
@@ -29,14 +30,19 @@ CREATE TABLE aluno(alun_pront BIGINT NOT NULL,
                    CONSTRAINT FK_aluno_curso FOREIGN KEY (alun_id_curso) REFERENCES curso(curs_id));
                    
 
-CREATE TABLE tcc(tcc_id BIGINT NOT NULL,
+CREATE TABLE tcc(tcc_id BIGINT NOT NULL AUTO_INCREMENT,
                  tcc_titulo VARCHAR(200) NOT NULL,
-                 tcc_aluno_pront BIGINT NOT NULL,
                  tcc_id_orientador BIGINT NOT NULL,
-                 tcc_status_alun BOOLEAN DEFAULT NULL,
-                 CONSTRAINT PK_tcc PRIMARY KEY(tcc_id,tcc_aluno_pront),
+                 tcc_aprov BOOLEAN DEFAULT NULL,
+                 CONSTRAINT PK_tcc PRIMARY KEY(tcc_id,tcc_id_orientador),
                  CONSTRAINT FK_tcc_orientador FOREIGN KEY(tcc_id_orientador) REFERENCES orientador(ori_id));
-                 
+   
+   
+ CREATE TABLE tcc_aluno(tcc_id BIGINT NOT NULL,
+                        tcc_alun_pront VARCHAR(200) NOT NULL,
+                        CONSTRAINT PK_tcc_aluno PRIMARY KEY(tcc_id,tcc_alun_pront),
+                        CONSTRAINT FK_tcc_aluno FOREIGN KEY(tcc_alun_pront) REFERENCES aluno(alun_pront),
+                        CONSTRAINT FK_tcc_tcc FOREIGN KEY(tcc_id) REFERENCES tcc(tcc_id));  
 
 CREATE TABLE convite(convt_id BIGINT NOT NULL AUTO_INCREMENT,
                      convt_id_orientador BIGINT NOT NULL,
@@ -68,7 +74,7 @@ CREATE TABLE banca(banca_id BIGINT NOT NULL  AUTO_INCREMENT,
                    CONSTRAINT UNQ_banca_tcc_membro UNIQUE(banca_tcc_id,banca_membro_cpf));
        
 CREATE TABLE certificado(certf_id BIGINT NOT NULL AUTO_INCREMENT,
-						 certf_aluno_pront BIGINT NOT NULL,
+						 certf_aluno_pront VARCHAR(10) NOT NULL,
 						 certf_tcc_id BIGINT NOT NULL,
 						 certf_memb_cpf BIGINT NOT NULL,
 						 cert_dt_emi DATETIME NOT NULL,
@@ -81,6 +87,7 @@ CREATE TABLE certificado(certf_id BIGINT NOT NULL AUTO_INCREMENT,
                    
                    
                    select * from curso;
+                   select * from orientador;
                    select * from aluno;
                    delete from aluno;
                    delete from curso where curs_id >4;

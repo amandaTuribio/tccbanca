@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\AppBundle\DAO;
 
 use AppBundle\DAO\AlunoDAO;
 use AppBundle\DAO\CursoDAO;
@@ -31,7 +31,6 @@ class AlunoDAOTest extends KernelTestCase {
         $this->entityManager = static::$kernel->getContainer()
                 ->get('doctrine')
                 ->getManager();
-        self::tearDownAfterClass();
         $this->alunoDAO = new AlunoDAO($this->entityManager);
         $this->cursoDAO = new CursoDAO($this->entityManager);
     }
