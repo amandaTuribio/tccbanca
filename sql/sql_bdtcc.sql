@@ -82,14 +82,14 @@ CREATE TABLE certificado(certf_id BIGINT NOT NULL AUTO_INCREMENT,
 						 CONSTRAINT FK_certificado_tcc FOREIGN KEY(certf_tcc_id) REFERENCES tcc(tcc_id));
                    
                    
-                   select * from curso;
+                   /*select * from curso;
                    select * from orientador;
                    select * from aluno;
                    delete from aluno;
                    delete from curso where curs_id >4;
                    
                    
-               truncate table curso;
+               truncate table curso;*/
                    
                    
                     
