@@ -21,28 +21,24 @@ INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE 
 INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM AUTOMAÇÃO INDUSTRIAL');
 INSERT INTO curso(curs_nome)VALUES('LICENCIATURA EM MATEMÁTICA');
 INSERT INTO curso(curs_nome)VALUES('BACHARELADO EM ENGENHARIA DE CONTROLE E AUTOMAÇÃO');
-                   
-CREATE TABLE aluno(alun_pront VARCHAR(10) NOT NULL,
-                   alun_nome VARCHAR(100) NOT NULL,
-                   alun_email VARCHAR(200) NOT NULL,
-                   alun_id_curso BIGINT NOT NULL,
-                   CONSTRAINT PK_aluno PRIMARY KEY(alun_pront),
-                   CONSTRAINT FK_aluno_curso FOREIGN KEY (alun_id_curso) REFERENCES curso(curs_id));
-                   
-
-CREATE TABLE tcc(tcc_id BIGINT NOT NULL AUTO_INCREMENT,
+              
+              
+ CREATE TABLE tcc(tcc_id BIGINT NOT NULL AUTO_INCREMENT,
                  tcc_titulo VARCHAR(200) NOT NULL,
                  tcc_id_orientador BIGINT NOT NULL,
                  tcc_aprov BOOLEAN DEFAULT NULL,
                  CONSTRAINT PK_tcc PRIMARY KEY(tcc_id,tcc_id_orientador),
                  CONSTRAINT FK_tcc_orientador FOREIGN KEY(tcc_id_orientador) REFERENCES orientador(ori_id));
-   
-   
- CREATE TABLE tcc_aluno(tcc_id BIGINT NOT NULL,
-                        tcc_alun_pront VARCHAR(200) NOT NULL,
-                        CONSTRAINT PK_tcc_aluno PRIMARY KEY(tcc_id,tcc_alun_pront),
-                        CONSTRAINT FK_tcc_aluno FOREIGN KEY(tcc_alun_pront) REFERENCES aluno(alun_pront),
-                        CONSTRAINT FK_tcc_tcc FOREIGN KEY(tcc_id) REFERENCES tcc(tcc_id));  
+                 
+CREATE TABLE aluno(alun_pront VARCHAR(10) NOT NULL,
+                   alun_nome VARCHAR(100) NOT NULL,
+                   alun_email VARCHAR(200) NOT NULL,
+                   alun_id_curso BIGINT NOT NULL,
+                   alun_id_tcc BIGINT DEFAULT NULL,
+                   CONSTRAINT PK_aluno PRIMARY KEY(alun_pront),
+                   CONSTRAINT FK_aluno_curso FOREIGN KEY (alun_id_curso) REFERENCES curso(curs_id),
+                   CONSTRAINT FK_aluno_tcc FOREIGN KEY (alun_id_tcc) REFERENCES tcc(tcc_id));
+                   
 
 CREATE TABLE convite(convt_id BIGINT NOT NULL AUTO_INCREMENT,
                      convt_id_orientador BIGINT NOT NULL,

@@ -29,7 +29,7 @@ class TCCDAO extends GenericDAO{
         $tcc->setId($entity->getId());
         $tcc->setTitulo($entity->getTitulo());
         $tcc->setAlunos($entity->getAlunos());
-        $tcc->setStatus($entity->getStatus());
+        $tcc->setAprovado($entity->isAprovado());
         $this->entityManager->flush();
     }
     

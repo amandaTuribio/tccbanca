@@ -49,8 +49,11 @@ class Aluno {
      */
     private $curso;
     
-    
-
+    /**
+     * @ORM\ManyToOne(targetEntity="TCC", inversedBy="alunos")
+     * @ORM\JoinColumn(name="alun_id_tcc", referencedColumnName="tcc_id")
+     */
+    private $tcc;
     
     function __construct($prontuario, $nome, $email, $curso) {
         $this->prontuario = $prontuario;
@@ -92,6 +95,14 @@ class Aluno {
         $this->curso = $curso;
     }
 
+
+    function getTcc() {
+        return $this->tcc;
+    }
+
+    function setTcc($tcc) {
+        $this->tcc = $tcc;
+    }
 
 
 

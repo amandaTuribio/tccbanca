@@ -32,11 +32,11 @@ class TCCTest extends TestCase{
     
    public function setUp() {
       $curso = new Curso("TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS");
-      $this->orientador = new Orientador("GIOVANI", "giovani@ifsp.edu.br", "12345");
-      $this->aluno = new Aluno(1562461, "Gabriel Martins", "gabriel.souzamartins94@gmail.com", $curso);
+      $this->orientador = new Orientador("Orientador A", "orientadorA@ifsp.edu.br", "12345");
+      $this->aluno = new Aluno(12345, "Aluno A", "alunoA@gmail.com", $curso);
    }
    
-   public function testTccPossuiDados(){
+   public function testTCCPossuiDados(){
        $tcc = new TCC("Titulo TCC",$this->orientador);
        $tcc->adicionarAluno($this->aluno);
        $this->assertEquals("Titulo TCC", $tcc->getTitulo());
@@ -47,6 +47,14 @@ class TCCTest extends TestCase{
         
    }
    
+   
+   public function testTCCPossuiAlunos(){
+       $tcc = new TCC("Titulo TCC",$this->orientador);
+       $tcc->adicionarAluno($this->aluno);
+       $this->assertEquals("Titulo TCC", $tcc->getTitulo());
+       $this->assertNotNull($tcc->getAlunos());
+       
+   }
    
    
 }

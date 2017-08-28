@@ -50,6 +50,15 @@ class Curso {
     }
 
     
+    function adicionarAluno($aluno) {
+        $this->alunos->add($aluno);
+    }
+    
+    function getAlunos() {
+        return $this->alunos;
+    }
+    
+    
     function getId() {
         return $this->id;
     }
@@ -65,6 +74,8 @@ class Curso {
     function setNome($nome) {
         $this->nome = $nome;
     }
+    
+    
     
     
 

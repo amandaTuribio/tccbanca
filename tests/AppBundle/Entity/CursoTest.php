@@ -20,12 +20,19 @@ use PHPUnit\Framework\TestCase;
 
 class CursoTest extends TestCase{
 
-   
+   private $aluno;
+    
    public function testCursoPossuiDados(){
-        $curso = new Curso("TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS");
-       
+       $curso = new Curso("TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS");
        $this->assertEquals("TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS", $curso->getNome());
         
+   }
+   
+   public function testCursoPossuiAlunos(){
+       $curso = new Curso("TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS");
+       $curso->adicionarAluno($this->aluno);
+       $this->assertEquals("TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS", $curso->getNome());
+       $this->assertNotNull($curso->getAlunos());
    }
    
    

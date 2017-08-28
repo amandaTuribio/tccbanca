@@ -38,12 +38,8 @@ class TCC {
     private $titulo;
     
 
-      /**
-     * @ORM\ManyToMany(targetEntity="Aluno")
-     * @ORM\JoinTable(name="tcc_aluno",
-     *      joinColumns={@ORM\JoinColumn(name="tcc_alun_pront", referencedColumnName="aluno_pront")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="tcc_id", referencedColumnName="tcc_id")}
-     *      )
+     /**
+     * @ORM\OneToMany(targetEntity="Aluno", mappedBy="tcc")
      */
     private $alunos;
     
@@ -87,7 +83,7 @@ class TCC {
         return $this->orientador;
     }
 
-    function getAprovado() {
+    function isAprovado() {
         return $this->aprovado;
     }
 
