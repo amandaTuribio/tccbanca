@@ -1,0 +1,36 @@
+.navbar-ifsp{
+    color: #ffffff;
+    background-color: rgba(0,141,0,0.7);
+   
+}
+
+.text-header{
+    font-family: 'Segoe UI';
+    font-size: larger;
+    padding-left: 30px;
+    color:#ffffff;
+}
+
+
+.btn-login{
+  color: #000000;
+  background-image: none;
+  border-color: #28a745;
+}
+
+.btn-login:hover {
+  color: #ffffff;
+  background-color: #dc3545;
+  border-color: #28a745;
+  
+  
+}
+
+.btn-login:focus, .btn-login.focus {
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.5);
+}
+
+.btn-login.disabled, .btn-login:disabled {
+  color: #28a745;
+  background-color: transparent;
+}
