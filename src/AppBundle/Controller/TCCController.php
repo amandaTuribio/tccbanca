@@ -20,7 +20,7 @@ class TCCController extends Controller{
      * @Route("/tcc/cadastro")
      */
     public function cadastro(){
-         return $this->render('common/import_assets.html.twig',array('page_title' => 'Cadastro TCC'));
+         return $this->render('tcc/cadastro.html.twig');
     }
     
     
