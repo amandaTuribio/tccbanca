@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Tests\AppBundle\DAO;
 
 use AppBundle\DAO\AlunoDAO;
@@ -14,11 +8,6 @@ use AppBundle\Entity\Curso;
 use AppBundle\Entity\Aluno;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * Description of AlunoDAOTest
- *
- * @author Gabriel Martins
- */
 class AlunoDAOTest extends KernelTestCase {
 
     private $entityManager;
@@ -97,10 +86,7 @@ class AlunoDAOTest extends KernelTestCase {
                 ->setParameter("id", 4);
 
         $queryCurso->execute();
-
         
-        
-
         $this->entityManager->close();
         $this->entityManager = null;
         $this->cursoDAO = null;

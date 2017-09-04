@@ -1,20 +1,6 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Aluno
- *
- * @author Gabriel Martins
- */
-
-
 namespace AppBundle\Entity;
-
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,8 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="aluno")
  */
-class Aluno {
-   
+class Aluno {   
     
     /**
      * @ORM\Column(type="string",length=10,name="alun_pront")
@@ -31,7 +16,6 @@ class Aluno {
      */
     private $prontuario;
     
-     
     /**
      * @ORM\Column(type="string", length=300,name="alun_nome")
      */
@@ -45,16 +29,19 @@ class Aluno {
     
     /**
      * @ORM\ManyToOne(targetEntity="Curso", inversedBy="alunos")
+     *@ORM\Column(type="bigint", name="alun_id_curso")
      * @ORM\JoinColumn(name="alun_id_curso", referencedColumnName="curs_id")
      */
     private $curso;
     
     /**
      * @ORM\ManyToOne(targetEntity="TCC", inversedBy="alunos")
+     *@ORM\Column(type="bigint", name="alun_id_tcc")
      * @ORM\JoinColumn(name="alun_id_tcc", referencedColumnName="tcc_id")
      */
     private $tcc;
     
+
     function __construct($prontuario, $nome, $email, $curso) {
         $this->prontuario = $prontuario;
         $this->nome = $nome;
@@ -95,7 +82,6 @@ class Aluno {
         $this->curso = $curso;
     }
 
-
     function getTcc() {
         return $this->tcc;
     }
@@ -103,9 +89,5 @@ class Aluno {
     function setTcc($tcc) {
         $this->tcc = $tcc;
     }
-
-
-
-
     
 }
