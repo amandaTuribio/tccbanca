@@ -44,6 +44,9 @@ CREATE TABLE aluno(alun_pront VARCHAR(10) NOT NULL,
                    CONSTRAINT PK_aluno PRIMARY KEY(alun_pront),
                    CONSTRAINT FK_aluno_curso FOREIGN KEY (alun_id_curso) REFERENCES curso(curs_id),
                    CONSTRAINT FK_aluno_tcc FOREIGN KEY (alun_id_tcc) REFERENCES tcc(tcc_id));
+  
+INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156246-1','Gabriel','gabriel.souzamartins94@gmail.com',1);
+INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156245-X','João','joao4@gmail.com',1);
                    
 
 CREATE TABLE convite(convt_id BIGINT NOT NULL AUTO_INCREMENT,

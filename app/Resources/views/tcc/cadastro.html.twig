@@ -4,6 +4,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {{ include('common/import_assets.html.twig') }}
         <title>Cadastro TCC</title>
+
+
+        <script>
+            function carregaAlunos() {
+                $(document).ready(function () {
+                    $.ajax({
+                        url: "/tcc/pesquisa_alunos_curso",
+                        type: "POST",
+                       
+                        data: {
+                            curso: $('#curso').val()
+                        },
+                         dataType:"JSON",
+                        success: function(alunos) {
+                           console.log(alunos);
+                        }
+                    });
+                });
+            }
+        </script>
     </head>
 
     {{ include('common/navbar.html.twig') }}
@@ -28,14 +48,14 @@
 
                 <div class="form-group">
                     <label class="control-label"  for="curso">Curso:</label>
-                    <select name="curso" class="form-control">
+                    <select id="curso" name="curso" class="form-control" onchange="carregaAlunos()">
                         {% for curso in cursos %}
                             <option value="{{curso.id}}">{{curso.nome}}</option>
                         {% endfor %}
                     </select>
                 </div>
-                    
-                    
+
+
                 <div class="col-sm-offset-2">
                     <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
