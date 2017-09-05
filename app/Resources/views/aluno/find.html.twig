@@ -1,0 +1,26 @@
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {{ include('common/import_assets.html.twig') }}
+        <title>Cadastro Aluno</title>
+    </head>
+    {{ include('common/navbar.html.twig') }}
+    <body>
+      
+       
+        <h3>Alunos</h3>
+    <ul class="tags">
+            <li>Nome:{{ aluno.nome }}</li>
+            <li>Prontuario: {{ aluno.prontuario }}</li>
+            <li>E-mail: {{ aluno.email }}</li>
+            <li>Cursos: {{ aluno.curso }}</li>
+    </ul>
+
+    <a href="{{ path('aluno.delete', {'id': aluno.prontuario}) }}">Deletar Aluno</a><br>
+    <a href="{{ path('aluno.edit', {'id': aluno.prontuario}) }}">Editar Aluno</a>
+    </body>
+
+      {{ include('common/footer.html.twig') }}
+</html>
+
