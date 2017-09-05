@@ -8,11 +8,40 @@
 
     {{ include('common/navbar.html.twig') }}
     <body>
-        <form>
 
+        <div class="container">
+            <h1>Cadastro TCC</h1>
+            <form action="/tcc/store" method="post">
+                <div class="form-group">
+                    <label for="titulo" class="control-label">Titulo:</label>
+                    <input type="text" class="form-control" name="titulo">
 
-        </form>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"  for="orientador">Orientador:</label>
+                    <select name="orientador" class="form-control">
+                        {% for orientador in orientadores %}
+                            <option value="{{orientador.id}}">{{orientador.nome}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label"  for="curso">Curso:</label>
+                    <select name="curso" class="form-control">
+                        {% for curso in cursos %}
+                            <option value="{{curso.id}}">{{curso.nome}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                    
+                    
+                <div class="col-sm-offset-2">
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </div>
+            </form>
+        </div>
     </body>
 
-      {{ include('common/footer.html.twig') }}
+    {{ include('common/footer.html.twig') }}
 </html>

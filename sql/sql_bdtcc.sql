@@ -5,12 +5,18 @@ create database bdtcc;
 use bdtcc;
 
 SET SQL_SAFE_UPDATES = 0;
+
+
 CREATE TABLE orientador(ori_id BIGINT NOT NULL AUTO_INCREMENT,
                         ori_nome VARCHAR(100) NOT NULL,
 						ori_email VARCHAR(200) NOT NULL,
                         ori_senha VARCHAR(200) NOT NULL,
                         CONSTRAINT PK_orientador PRIMARY KEY(ori_id),
                         CONSTRAINT UNQ_orientador_email UNIQUE(ori_email));
+                        
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('GIOVANI','giovani@ifsp.edu.br','12345');
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('ANTONIO','antonio@ifsp.edu.br','45678');
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('RODRIGO','rodrigo@ifsp.edu.br','10111');
                         
 CREATE TABLE curso(curs_id BIGINT NOT NULL AUTO_INCREMENT,
                    curs_nome VARCHAR(300) NOT NULL,
@@ -80,8 +86,7 @@ CREATE TABLE certificado(certf_id BIGINT NOT NULL AUTO_INCREMENT,
 						 CONSTRAINT FK_certificado_aluno FOREIGN KEY(certf_aluno_pront) REFERENCES aluno(alun_pront),
 						 CONSTRAINT FK_certificado_membro FOREIGN KEY(certf_memb_cpf) REFERENCES membro(memb_cpf),
 						 CONSTRAINT FK_certificado_tcc FOREIGN KEY(certf_tcc_id) REFERENCES tcc(tcc_id));
-                   
-                   
+
                    /*select * from curso;
                    select * from orientador;
                    select * from aluno;

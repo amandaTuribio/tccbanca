@@ -7,8 +7,14 @@
  */
 
 namespace AppBundle\Controller;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use AppBundle\DAO\CursoDAO;
+use AppBundle\DAO\OrientadorDAO;
+use AppBundle\DAO\TCCDAO;
+use AppBundle\Entity\TCC;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 /**
  * Description of TCCConstroller
  *
@@ -20,16 +26,34 @@ class TCCController extends Controller{
      * @Route("/tcc/cadastro")
      */
     public function cadastro(){
-         return $this->render('tcc/cadastro.html.twig');
+        $entityManager = $this->getDoctrine()->getManager();
+        $orientadorDAO = new OrientadorDAO($entityManager);
+        $cursoDAO = new CursoDAO($entityManager);
+        $orientadores = $orientadorDAO->listarTodos();
+        $cursos = $cursoDAO->listarTodos();
+         return $this->render('tcc/cadastro.html.twig',array('orientadores'=>$orientadores,
+                                                             'cursos'=>$cursos));
+ 
+      
     }
     
     
     /**
-     * @Route("/tcc/store")
+        * @Route("/tcc/store",name="salvartcc")
      */
-    public function store(){
-        return  $this->render('tcc/store.html.twig');
+    public function store(Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $orientadorDAO = new OrientadorDAO($entityManager);
+        $titulo = $request->get('titulo');
+        $orientador = $orientadorDAO->pesquisar($request->get('orientador'));
+        $tcc = new TCC($titulo, $orientador);
         
+        $tccDAO = new TCCDAO($entityManager);
+        $tccDAO->inserir($tcc);
+        $this->addFlash("Sucesso", "Cadastro Realizado com Sucesso !!!");
+        
+        return $this->render('tcc/cadastro_sucess.html.twig');
+     
     }
     
     
