@@ -7,14 +7,11 @@
     </head>
     {{ include('common/navbar.html.twig') }}
     <body>
-      <h2 align="center">Cadastro de Aluno</h2>
-        <div class="container">
-          <form action="/aluno/store" method="post">
-            <div class="form-group">
-              {{ form_widget(form) }}
-            </div>
-          </form>
-        </div>
+    
+      <form action={{ path('aluno.update', {'id': aluno.prontuario}) }} method="POST">
+          {{ form_widget(form) }}
+      </form>
     </body>
+
       {{ include('common/footer.html.twig') }}
 </html>
