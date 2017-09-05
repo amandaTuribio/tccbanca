@@ -26,8 +26,7 @@ class OrientadorDAO extends GenericDAO {
     public function __construct(EntityManager $entityManager) {
         parent::__construct($entityManager);
     }
-    
-    
+
     public function alterar($id,$entity) {
         $orientador = $this->entityManager->getRepository(Orientador::class)->find($id);
         $orientador->setId($entity->getId());
