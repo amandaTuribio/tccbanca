@@ -71,9 +71,12 @@ class TCCController extends Controller {
     public function store(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
         $orientadorDAO = new OrientadorDAO($entityManager);
+        $cursoDAO = new CursoDAO($entityManager);
         $tccDAO = new TCCDAO($entityManager);
         $titulo = $request->get('titulo');
         $orientador = $orientadorDAO->pesquisar($request->get('orientador'));
+        $curso = $cursoDAO->pesquisar($request->get('curso'));
+
 
         if (!isNull($tcc) && !isNull($orientador)) {
             $tcc = new TCC($titulo, $orientador);

@@ -29,7 +29,6 @@
                             }
                             if (json.length > 0) {
                                 $('#msg').html('Alunos Encontrados');
-
                             } else {
                                 $('#msg').html('Nenhum Aluno Encontrado');
                             }
@@ -41,41 +40,30 @@
 
 
             /** Submit Form **/
-            function sendForm() {
-
-                $("#formTCC").submit(function (e) {
+            $(document).ready(function () {
+                $("#btnForm").click(function () {
                     $.ajax({
-                        url: "/tcc/store",
-                        type: 'POST',
-                        data: $("#formTCC").serialize(),
-                        mimeType: "multipart/form-data",
-                        contentType: false,
-                        cache: false,
-                        processData: false,
+                        type: "POST",
+                        url: "/tccs/store",
                         dataType: 'json',
-                        success: function (data)
-                        {
-                            console.log(data);
-                            if (data.status == 'saved') {
-                                console.log("Deu certo");
-                                $("#msg_form").append("<p class='text-success'>Cadastro Realizado com Sucesso</p>");
+                        data: $('#formTCC').serialize(),
+                        cache: false,
+                        success: function (result) {
+                            if(result.status === 'saved'){
+                                console.log("TCC Salvo");
+                                alert(result);
+                            }else{
+                                console.log("TCC Já Cadastrado");
+                                alert(result);
                             }
-                            if (data.status == 'invalid') {
-                                console.log("Deu errado");
-                                $("#msg_form").append("<p class='text-danger'>TCC Já Cadastrado</p>");
-                            }
-                            console.log(data);
-
-                            alert("Deu Certo");
+                        }, error: function (result) {
+                            console.log(result);
+                            alert("Deu Errrado");
                         }
-
                     });
-
-                    e.preventDefault();
+                    return false;
                 });
-
-            }
-
+            });
         </script>
     </head>
 
@@ -87,12 +75,12 @@
             <form id="#formTCC">
                 <div class="form-group">
                     <label for="titulo" class="control-label">Titulo:</label>
-                    <input type="text" class="form-control" name="titulo">
+                    <input type="text" class="form-control" name="titulo" required="Por favor preencha o titulo">
 
                 </div>
                 <div class="form-group">
                     <label class="control-label"  for="orientador">Orientador:</label>
-                    <select name="orientador" class="form-control">
+                    <select name="orientador" class="form-control" required="Por favor escolha um orientador">
                         {% for orientador in orientadores %}
                             <option value="{{orientador.id}}">{{orientador.nome}}</option>
                         {% endfor %}
@@ -101,7 +89,7 @@
 
                 <div class="form-group">
                     <label class="control-label"  for="curso">Curso:</label>
-                    <select id="curso" name="curso" class="form-control" onchange="carregaAlunos()">
+                    <select id="curso" name="curso" class="form-control" onchange="carregaAlunos()" required="Por favor escolha um curso">
                         {% for curso in cursos %}
                             <option value="{{curso.id}}">{{curso.nome}}</option>
                         {% endfor %}
@@ -120,7 +108,7 @@
                 </div>
 
                 <div class="col-sm-offset-2">
-                    <button id="btnForm" type="submit" class="btn btn-success" onclick="sendForm()">Enviar</button>
+                    <input id="btnForm" type="submit" class="btn btn-success" value="Enviar">
                 </div>
 
             </form>
