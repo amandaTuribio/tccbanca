@@ -36,8 +36,8 @@ class Curso {
      */
     private $nome;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Aluno", mappedBy="curso")
+     /**
+     * @ORM\OneToMany(targetEntity="Aluno", mappedBy="curso",cascade={"persist"})
      */
     private $alunos;
 

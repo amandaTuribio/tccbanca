@@ -7,6 +7,9 @@
 
 
         <script>
+
+            /*** Pesquisar Alunos **/
+
             function carregaAlunos() {
                 $(document).ready(function () {
                     $.ajax({
@@ -16,23 +19,63 @@
                         type: "POST",
                         dataType: "json",
                         beforeSend: function () {
+                            $('#listaAlunos').empty();
                             $('#msg').html('Carregando Alunos ...');
                         },
-
                         success: function (json) {
-
                             console.log(json);
-                            $.each(json, function (index, value) {
-                             
-                             console.log(value);
-                            /* $('#theme').append('<option value="' + value[0] + '">' + value[1] + '</option>');
-                             $('#loading').remove();*/
-                             });
-                            $('#msg').html(json[0] + ' Alunos Encontrados');
+                            for (var i = 0; i < json.length; i++) {
+                                $('#listaAlunos').append('<option id="conteudo" value="' + json[i].id + '">' + json[i].id + "-" + json[i].nome + '</option>');
+                            }
+                            if (json.length > 0) {
+                                $('#msg').html('Alunos Encontrados');
+
+                            } else {
+                                $('#msg').html('Nenhum Aluno Encontrado');
+                            }
+
                         }
                     });
                 });
             }
+
+
+            /** Submit Form **/
+            function sendForm() {
+
+                $("#formTCC").submit(function (e) {
+                    $.ajax({
+                        url: "/tcc/store",
+                        type: 'POST',
+                        data: $("#formTCC").serialize(),
+                        mimeType: "multipart/form-data",
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        dataType: 'json',
+                        success: function (data)
+                        {
+                            console.log(data);
+                            if (data.status == 'saved') {
+                                console.log("Deu certo");
+                                $("#msg_form").append("<p class='text-success'>Cadastro Realizado com Sucesso</p>");
+                            }
+                            if (data.status == 'invalid') {
+                                console.log("Deu errado");
+                                $("#msg_form").append("<p class='text-danger'>TCC Já Cadastrado</p>");
+                            }
+                            console.log(data);
+
+                            alert("Deu Certo");
+                        }
+
+                    });
+
+                    e.preventDefault();
+                });
+
+            }
+
         </script>
     </head>
 
@@ -41,7 +84,7 @@
 
         <div class="container">
             <h1>Cadastro TCC</h1>
-            <form action="/tcc/store" method="post">
+            <form id="#formTCC">
                 <div class="form-group">
                     <label for="titulo" class="control-label">Titulo:</label>
                     <input type="text" class="form-control" name="titulo">
@@ -65,22 +108,21 @@
                     </select>
                 </div>
 
-               
+
 
                 <div class="form-group">
                     <p id="msg" class="text-info"></p>
-                    <select class="form-control" name="aluno" size="5" multiple>
-                        <option>text1</option>
-                        <option>text2</option>
-                        <option>text3</option>
-                        <option>text4</option>
-                        <option>text5</option>
+                    <select id="listaAlunos" class="form-control" name="aluno" size="5" multiple>
                     </select>
                 </div>
 
-                <div class="col-sm-offset-2">
-                    <button type="submit" class="btn btn-success">Enviar</button>
+                <div class="form-group" id="msg_form">
                 </div>
+
+                <div class="col-sm-offset-2">
+                    <button id="btnForm" type="submit" class="btn btn-success" onclick="sendForm()">Enviar</button>
+                </div>
+
             </form>
         </div>
     </body>

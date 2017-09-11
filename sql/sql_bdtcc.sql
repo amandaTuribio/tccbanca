@@ -85,14 +85,17 @@ CREATE TABLE certificado(certf_id BIGINT NOT NULL AUTO_INCREMENT,
 						 CONSTRAINT FK_certificado_tcc FOREIGN KEY(certf_tcc_id) REFERENCES tcc(tcc_id));
 
 
-
-INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('GIOVANI','giovani@ifsp.edu.br','12345');
-INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('ANTONIO','antonio@ifsp.edu.br','45678');
-INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('RODRIGO','rodrigo@ifsp.edu.br','10111');
 INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS');
 INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM AUTOMAÇÃO INDUSTRIAL');
 INSERT INTO curso(curs_nome)VALUES('LICENCIATURA EM MATEMÁTICA');
 INSERT INTO curso(curs_nome)VALUES('BACHARELADO EM ENGENHARIA DE CONTROLE E AUTOMAÇÃO');
+
+
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('GIOVANI','giovani@ifsp.edu.br','12345');
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('ANTONIO','antonio@ifsp.edu.br','45678');
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('RODRIGO','rodrigo@ifsp.edu.br','10111');
+
+
 INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156246-1','Gabriel','gabriel.souzamartins94@gmail.com',1);
 INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156245-X','João','joao4@gmail.com',1);
 
@@ -107,3 +110,8 @@ INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156245-X
                    
                    
                     
+                    
+                    select * from aluno;
+                    
+                    select a.*,c.* from aluno as a inner join curso as c on alun_id_curso = curs_id; 
+                    select * from tcc;

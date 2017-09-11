@@ -27,7 +27,6 @@ class Aluno {
     private $email;
 
     /**
-     * @ORM\Column(type="integer", name="alun_id_curso")
      * @ORM\ManyToOne(targetEntity="Curso", inversedBy="alunos")
      * @ORM\JoinColumn(name="alun_id_curso", referencedColumnName="curs_id")
      */

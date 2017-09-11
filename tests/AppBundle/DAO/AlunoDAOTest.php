@@ -31,7 +31,7 @@ class AlunoDAOTest extends KernelTestCase {
         $this->alunoDAO->inserir($aluno);
     }
 
-    /*public function testAlterarAluno() {
+    public function testAlterarAluno() {
         $curso = new Curso("CURSO B");
         $this->cursoDAO->inserir($curso);
         $aluno = new Aluno("2", "Aluno B", "alunoB@gmail.com", $curso);
@@ -69,38 +69,44 @@ class AlunoDAOTest extends KernelTestCase {
         $alunos = $this->alunoDAO->listarTodos();
         $this->assertNotNull($alunos);
     }
-    
+
     public function testListarAlunosDeCurso() {
         $curso = new Curso("CURSO X");
-        $cursoInserido = $this->cursoDAO->inserir($curso);
         $aluno1 = new Aluno("156246-1", "Gabriel Martins", "gabriel.souzamartins94@gmail.com", $curso);
         $aluno2 = new Aluno("153252-1", "Joao da Silva", "joao.silva@gmail.com", $curso);
-        $this->alunoDAO->inserir($aluno1);
-        $this->alunoDAO->inserir($aluno2);
         
-        $alunos = $cursoInserido->getAluno();
-        $this->assertGreaterThan(1, $alunos.length());
-        foreach ($alunos as $aluno){
-           printf("\n" . $aluno->getProntuario() . " - " . $aluno->getNome() ."\n") ;
-       }
-    }*/
+        $curso->adicionarAluno($aluno1);
+        $curso->adicionarAluno($aluno2);
+        $this->cursoDAO->inserir($curso);
+
+
+
+        $cursoAtualizado = $this->cursoDAO->pesquisar($curso->getId());
+        $alunos = $cursoAtualizado->getAlunos();
+
+        printf("\n A QUANTIDADE DE ALUNOS É : " . $alunos->count());
+        $this->assertGreaterThan(1, $alunos->count());
+        foreach ($alunos as $aluno) {
+            printf("\n" . $aluno->getProntuario() . " - " . $aluno->getNome() . "\n");
+        }
+    }
 
     protected function tearDown() {
         parent::tearDown();
 
 
         $queryAluno = $this->entityManager->createQuery(
-                        'DELETE AppBundle:Aluno aluno');
+                'DELETE AppBundle:Aluno aluno');
 
         $queryAluno->execute();
-        
+
         $queryCurso = $this->entityManager->createQuery(
                         'DELETE AppBundle:Curso curso 
                WHERE curso.id > :id')
                 ->setParameter("id", 4);
 
         $queryCurso->execute();
-        
+
         $this->entityManager->close();
         $this->entityManager = null;
         $this->cursoDAO = null;

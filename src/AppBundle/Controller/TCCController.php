@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of TCCConstroller
@@ -45,17 +46,15 @@ class TCCController extends Controller {
         try {
             $entityManager = $this->getDoctrine()->getManager();
             $cursoDAO = new CursoDAO($entityManager);
-            $id = $request->get('curso');
-            $curso = $cursoDAO->pesquisar($id);  
-            $cursos = $cursoDAO->listarTodos();
-            //$alunos = $curso->getAlunos();
+            $curso = $cursoDAO->pesquisar($request->get('curso'));
+            $alunos = $curso->getAlunos();
             $json = array();
-            foreach ($cursos as$curso) {
-                $json[] = array($curso->getId(), $curso->getNome());
+            foreach ($alunos as $aluno) {
+                $json[] = array('id' => $aluno->getProntuario(), 'nome' => $aluno->getNome());
             }
-            
- 
-            return new JsonResponse(array('cursos'=> $json));
+
+
+            return new JsonResponse($json);
         } catch (Exception $e) {
             return new JsonResponse(
                     array(
@@ -72,15 +71,20 @@ class TCCController extends Controller {
     public function store(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
         $orientadorDAO = new OrientadorDAO($entityManager);
+        $tccDAO = new TCCDAO($entityManager);
         $titulo = $request->get('titulo');
         $orientador = $orientadorDAO->pesquisar($request->get('orientador'));
-        $tcc = new TCC($titulo, $orientador);
 
-        $tccDAO = new TCCDAO($entityManager);
-        $tccDAO->inserir($tcc);
-        $this->addFlash("Sucesso", "Cadastro Realizado com Sucesso !!!");
+        if (!isNull($tcc) && !isNull($orientador)) {
+            $tcc = new TCC($titulo, $orientador);
+            $tccDAO->inserir($tcc);
+            $status = "saved";
+        }else{
+            $status = "invalid";
+        }
 
-        return $this->render('tcc/cadastro_sucess.html.twig');
+
+        return new JsonResponse(array('status' => $status));
     }
 
     /**
