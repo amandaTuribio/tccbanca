@@ -8,39 +8,37 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="aluno")
  */
-class Aluno {   
-    
+class Aluno {
+
     /**
      * @ORM\Column(type="string",length=10,name="alun_pront")
      * @ORM\Id
      */
     private $prontuario;
-    
+
     /**
      * @ORM\Column(type="string", length=300,name="alun_nome")
      */
     private $nome;
-    
-     /**
+
+    /**
      * @ORM\Column(type="string", length=300,name="alun_email")
      */
     private $email;
-    
-    
+
     /**
+     * @ORM\Column(type="integer", name="alun_id_curso")
      * @ORM\ManyToOne(targetEntity="Curso", inversedBy="alunos")
-     *@ORM\Column(type="bigint", name="alun_id_curso")
      * @ORM\JoinColumn(name="alun_id_curso", referencedColumnName="curs_id")
      */
     private $curso;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="TCC", inversedBy="alunos")
-     *@ORM\Column(type="bigint", name="alun_id_tcc")
+     * @ORM\Column(type="integer", name="alun_id_tcc")
      * @ORM\JoinColumn(name="alun_id_tcc", referencedColumnName="tcc_id")
      */
     private $tcc;
-    
 
     function __construct($prontuario, $nome, $email, $curso) {
         $this->prontuario = $prontuario;
@@ -48,8 +46,7 @@ class Aluno {
         $this->email = $email;
         $this->curso = $curso;
     }
-    
-    
+
     function getProntuario() {
         return $this->prontuario;
     }
@@ -89,5 +86,12 @@ class Aluno {
     function setTcc($tcc) {
         $this->tcc = $tcc;
     }
+
+      public function _toString(){
+        return $this->nome;
+    }
     
+   
+    
+
 }

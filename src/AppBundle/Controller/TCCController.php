@@ -8,13 +8,14 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\DAO\AlunoDAO;
 use AppBundle\DAO\CursoDAO;
 use AppBundle\DAO\OrientadorDAO;
 use AppBundle\DAO\TCCDAO;
 use AppBundle\Entity\TCC;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,11 +42,28 @@ class TCCController extends Controller {
      * @Route("/tcc/pesquisa_alunos_curso", name="pesquisaralunoscursotcc")
      */
     public function pesquisarAlunosPorCurso(Request $request) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $cursoDAO = new CursoDAO($entityManager);
-        $curso = $cursoDAO->pesquisar($request->get('curso'));
-        $alunos = $cursoDAO->listarAlunosPorCurso($curso);
-        return $this->json($alunos);
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+            $cursoDAO = new CursoDAO($entityManager);
+            $id = $request->get('curso');
+            $curso = $cursoDAO->pesquisar($id);  
+            $cursos = $cursoDAO->listarTodos();
+            //$alunos = $curso->getAlunos();
+            $json = array();
+            foreach ($cursos as$curso) {
+                $json[] = array($curso->getId(), $curso->getNome());
+            }
+            
+ 
+            return new JsonResponse(array('cursos'=> $json));
+        } catch (Exception $e) {
+            return new JsonResponse(
+                    array(
+                'status' => 'errorException',
+                'message' => $e->getMessage()
+                    )
+            );
+        }
     }
 
     /**

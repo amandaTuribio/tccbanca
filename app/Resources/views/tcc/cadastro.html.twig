@@ -11,14 +11,24 @@
                 $(document).ready(function () {
                     $.ajax({
                         url: "/tcc/pesquisa_alunos_curso",
+                        data: {curso: $('#curso').val()},
+                        cache: false,
                         type: "POST",
-                       
-                        data: {
-                            curso: $('#curso').val()
+                        dataType: "json",
+                        beforeSend: function () {
+                            $('#msg').html('Carregando Alunos ...');
                         },
-                         dataType:"JSON",
-                        success: function(alunos) {
-                           console.log(alunos);
+
+                        success: function (json) {
+
+                            console.log(json);
+                            $.each(json, function (index, value) {
+                             
+                             console.log(value);
+                            /* $('#theme').append('<option value="' + value[0] + '">' + value[1] + '</option>');
+                             $('#loading').remove();*/
+                             });
+                            $('#msg').html(json[0] + ' Alunos Encontrados');
                         }
                     });
                 });
@@ -55,6 +65,18 @@
                     </select>
                 </div>
 
+               
+
+                <div class="form-group">
+                    <p id="msg" class="text-info"></p>
+                    <select class="form-control" name="aluno" size="5" multiple>
+                        <option>text1</option>
+                        <option>text2</option>
+                        <option>text3</option>
+                        <option>text4</option>
+                        <option>text5</option>
+                    </select>
+                </div>
 
                 <div class="col-sm-offset-2">
                     <button type="submit" class="btn btn-success">Enviar</button>

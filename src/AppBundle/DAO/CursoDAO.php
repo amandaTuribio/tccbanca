@@ -46,9 +46,6 @@ class CursoDAO extends GenericDAO {
         return $cursos;
     }
     
-    public function listarAlunosPorCurso(Curso $curso){
-        $c = $this->entityManager->getRepository(Curso::class)->findOneBy(array('id' => $curso->getId() ));
-        return $c->getAlunos();
-    }
+   
     
 }

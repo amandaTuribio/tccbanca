@@ -25,14 +25,13 @@ class AlunoDAOTest extends KernelTestCase {
     }
 
     public function testInserirAluno() {
-
         $curso = new Curso("CURSO A");
         $this->cursoDAO->inserir($curso);
         $aluno = new Aluno("1", "Aluno A", "alunoA@gmail.com", $curso);
         $this->alunoDAO->inserir($aluno);
     }
 
-    public function testAlterarAluno() {
+    /*public function testAlterarAluno() {
         $curso = new Curso("CURSO B");
         $this->cursoDAO->inserir($curso);
         $aluno = new Aluno("2", "Aluno B", "alunoB@gmail.com", $curso);
@@ -70,6 +69,21 @@ class AlunoDAOTest extends KernelTestCase {
         $alunos = $this->alunoDAO->listarTodos();
         $this->assertNotNull($alunos);
     }
+    
+    public function testListarAlunosDeCurso() {
+        $curso = new Curso("CURSO X");
+        $cursoInserido = $this->cursoDAO->inserir($curso);
+        $aluno1 = new Aluno("156246-1", "Gabriel Martins", "gabriel.souzamartins94@gmail.com", $curso);
+        $aluno2 = new Aluno("153252-1", "Joao da Silva", "joao.silva@gmail.com", $curso);
+        $this->alunoDAO->inserir($aluno1);
+        $this->alunoDAO->inserir($aluno2);
+        
+        $alunos = $cursoInserido->getAluno();
+        $this->assertGreaterThan(1, $alunos.length());
+        foreach ($alunos as $aluno){
+           printf("\n" . $aluno->getProntuario() . " - " . $aluno->getNome() ."\n") ;
+       }
+    }*/
 
     protected function tearDown() {
         parent::tearDown();

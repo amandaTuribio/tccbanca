@@ -9,6 +9,7 @@
 namespace Tests\AppBundle\DAO;
 
 use AppBundle\DAO\CursoDAO;
+use AppBundle\Entity\Aluno;
 use AppBundle\Entity\Curso;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -62,6 +63,21 @@ class CursoDAOTest extends KernelTestCase {
         $cursos = $this->cursoDAO->listarTodos();
         $this->assertNotNull($cursos);
     }
+    
+    /*public function testAdicionarAlunosNoCurso() {
+        $curso = new Curso("CURSO X");
+        $cursoInserido = $this->cursoDAO->inserir($curso);
+        $aluno1 = new Aluno("156246-1", "Gabriel Martins", "gabriel.souzamartins94@gmail.com", $cursoInserido);
+        $aluno2 = new Aluno("153252-1", "Joao da Silva", "joao.silva@gmail.com", $cursoInserido);
+        $cursoInserido->adicionarAluno($aluno1);
+        $cursoInserido->adicionarAluno($aluno2);
+        
+        
+        $alunos = $cursoInserido->getAlunos();
+        $this->assertGreaterThan(1, $alunos.length());
+    }*/
+
+    
 
     protected function tearDown() {
 

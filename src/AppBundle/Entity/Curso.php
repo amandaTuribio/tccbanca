@@ -14,51 +14,46 @@
 
 namespace AppBundle\Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
-
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Aluno;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="curso")
  */
 class Curso {
-    
-    
+
     /**
      * @ORM\Column(type="integer",name="curs_id")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    
+
     /**
      * @ORM\Column(type="string", length=300,name="curs_nome")
      */
     private $nome;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Aluno", mappedBy="curso")
      */
     private $alunos;
-    
+
     function __construct($nome) {
         $this->alunos = new ArrayCollection();
         $this->nome = $nome;
     }
 
-    
     function adicionarAluno($aluno) {
         $this->alunos->add($aluno);
     }
-    
+
     function getAlunos() {
         return $this->alunos;
     }
-    
-    
+
     function getId() {
         return $this->id;
     }
@@ -74,10 +69,7 @@ class Curso {
     function setNome($nome) {
         $this->nome = $nome;
     }
-    
-    
-    
-    
 
+   
 
 }

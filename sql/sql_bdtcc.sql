@@ -14,19 +14,14 @@ CREATE TABLE orientador(ori_id BIGINT NOT NULL AUTO_INCREMENT,
                         CONSTRAINT PK_orientador PRIMARY KEY(ori_id),
                         CONSTRAINT UNQ_orientador_email UNIQUE(ori_email));
                         
-INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('GIOVANI','giovani@ifsp.edu.br','12345');
-INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('ANTONIO','antonio@ifsp.edu.br','45678');
-INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('RODRIGO','rodrigo@ifsp.edu.br','10111');
+
                         
 CREATE TABLE curso(curs_id BIGINT NOT NULL AUTO_INCREMENT,
                    curs_nome VARCHAR(300) NOT NULL,
 				   CONSTRAINT PK_curso PRIMARY KEY(curs_id),
                    CONSTRAINT UNQ_curso UNIQUE(curs_nome));
                    
-INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS');
-INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM AUTOMAÇÃO INDUSTRIAL');
-INSERT INTO curso(curs_nome)VALUES('LICENCIATURA EM MATEMÁTICA');
-INSERT INTO curso(curs_nome)VALUES('BACHARELADO EM ENGENHARIA DE CONTROLE E AUTOMAÇÃO');
+
               
               
  CREATE TABLE tcc(tcc_id BIGINT NOT NULL AUTO_INCREMENT,
@@ -45,8 +40,7 @@ CREATE TABLE aluno(alun_pront VARCHAR(10) NOT NULL,
                    CONSTRAINT FK_aluno_curso FOREIGN KEY (alun_id_curso) REFERENCES curso(curs_id),
                    CONSTRAINT FK_aluno_tcc FOREIGN KEY (alun_id_tcc) REFERENCES tcc(tcc_id));
   
-INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156246-1','Gabriel','gabriel.souzamartins94@gmail.com',1);
-INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156245-X','João','joao4@gmail.com',1);
+
                    
 
 CREATE TABLE convite(convt_id BIGINT NOT NULL AUTO_INCREMENT,
@@ -89,6 +83,18 @@ CREATE TABLE certificado(certf_id BIGINT NOT NULL AUTO_INCREMENT,
 						 CONSTRAINT FK_certificado_aluno FOREIGN KEY(certf_aluno_pront) REFERENCES aluno(alun_pront),
 						 CONSTRAINT FK_certificado_membro FOREIGN KEY(certf_memb_cpf) REFERENCES membro(memb_cpf),
 						 CONSTRAINT FK_certificado_tcc FOREIGN KEY(certf_tcc_id) REFERENCES tcc(tcc_id));
+
+
+
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('GIOVANI','giovani@ifsp.edu.br','12345');
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('ANTONIO','antonio@ifsp.edu.br','45678');
+INSERT INTO orientador(ori_nome,ori_email,ori_senha)VALUES('RODRIGO','rodrigo@ifsp.edu.br','10111');
+INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS');
+INSERT INTO curso(curs_nome)VALUES('TECNOLOGIA EM AUTOMAÇÃO INDUSTRIAL');
+INSERT INTO curso(curs_nome)VALUES('LICENCIATURA EM MATEMÁTICA');
+INSERT INTO curso(curs_nome)VALUES('BACHARELADO EM ENGENHARIA DE CONTROLE E AUTOMAÇÃO');
+INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156246-1','Gabriel','gabriel.souzamartins94@gmail.com',1);
+INSERT INTO aluno(alun_pront,alun_nome,alun_email,alun_id_curso)VALUES('156245-X','João','joao4@gmail.com',1);
 
                    /*select * from curso;
                    select * from orientador;
