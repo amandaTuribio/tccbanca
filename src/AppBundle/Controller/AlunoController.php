@@ -57,7 +57,7 @@ class AlunoController extends Controller{
 
 
     /**
-     * @Route("/aluno/cadastro")
+     * @Route("/aluno/cadastro", name="aluno.cadastro")
      */
     public function cadastro(){
         $form = $this->makeForm($this->aluno);
@@ -72,8 +72,6 @@ class AlunoController extends Controller{
         $errors = $validator->validate($aluno) ;
         if (count($errors) > 0) {
             foreach ($errors as $error){
-                //var_dump($error);
-                //$errorsA[] = $error->getmessage();propertyPath
                 $errorsA[] = $error;
             }
             return $errorsA;
@@ -117,7 +115,21 @@ class AlunoController extends Controller{
              'aluno' => $aluno,
         ));
     }
-    
+
+    /**
+     * @Route("/aluno/findNome", name="aluno.findNome")
+     */
+    public function findNome(Request $request){
+        $nome = $request->request->get('data'); 
+        $em = $this->getDoctrine()->getManager();
+        $dao = new AlunoDAO($em);
+        $aluno = $dao->pesquisarNome($nome);
+        
+        return $this->render('aluno/find.html.twig', array(
+             'aluno' => $aluno
+            )); 
+    }
+
     /**
      * @Route("/aluno/delete/{id}", name="aluno.delete")
      */
@@ -132,6 +144,7 @@ class AlunoController extends Controller{
     /**
      * @Route("/aluno/validaProntuario/{id}", name="aluno.validaProntuario")
      */
+
     public function validaProntuario($id){
         $em = $this->getDoctrine()->getManager();
         $dao = new AlunoDAO($em);

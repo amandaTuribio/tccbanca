@@ -46,7 +46,7 @@ class TCC {
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Orientador", inversedBy="tccs")
+     * @ORM\ManyToOne(targetEntity="Orientador", inversedBy="tccs",cascade={"all"})
      * @ORM\JoinColumn(name="tcc_id_orientador", referencedColumnName="ori_id")
      */
     private $orientador;

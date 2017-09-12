@@ -11,6 +11,9 @@
     color:#ffffff;
 }
 
+.pad{
+    align-items: center;
+}
 
 .btn-login{
     color: #000000;

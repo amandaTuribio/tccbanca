@@ -3,16 +3,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {{ include('common/import_assets.html.twig') }}
-        <title>Cadastro Orientador</title>
+        <title>Cadastro Aluno</title>
     </head>
     {{ include('common/navbar.html.twig') }}
     <body>
-    <br>    
     <div class="container">
-        <form action="/orientador/store" method="POST">
-            {{ form_widget(form) }}
-        </form>
-    </div>
+      <form action={{ path('orientador.update', {'id': orientador.id}) }} method="POST">
+          {{ form_widget(form) }}
+      </form>
+      </div>
     </body>
-    {{ include('common/footer.html.twig') }}
+
+      {{ include('common/footer.html.twig') }}
 </html>

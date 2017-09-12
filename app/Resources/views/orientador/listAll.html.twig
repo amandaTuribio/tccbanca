@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {{ include('common/import_assets.html.twig') }}
-        <title>Cadastro Aluno</title>
+        <title>Orientador</title>
     </head>
     {{ include('common/navbar.html.twig') }}
     <body>
@@ -11,13 +11,13 @@
         <div class="p-3">
             <div id="top" class="row">
                 <div class="col-md-3">
-                    <h2>Alunos</h2>
+                    <h2>Orientador</h2>
                 </div>
              
                 <div class="col-md-6">
-                <form action="/aluno/findNome" method="post">
+                <form action="/orientador/findNome" method="post">
                     <div class="input-group h2">
-                        <input name="data" class="form-control" id="search" type="text" placeholder="Pesquisar Aluno">
+                        <input name="data" class="form-control" id="search" type="text" placeholder="Pesquisar Orientador">
                         <span class="input-group-btn">
                             <button class="btn btn-primary" type="submit">
                                 <span class="glyphicon glyphicon-pencil"></span> Pesquisar
@@ -28,35 +28,33 @@
                 </div>
              
                 <div class="col-md-3">
-                    <a href="{{ path('aluno.cadastro')}}" class="btn btn-primary pull-right h2">Novo Aluno</a>
+                    <a href="{{ path('orientador.cadastroOrientador')}}" class="btn btn-primary pull-right h2">Novo Orientador</a>
                 </div>
             </div>
         </div>
         <div id="list" class="row">
             <div class="table-responsive col-md-12">
-                <table class="table table-striped" cellspacing="0" cellpadding="0">
+                <table class="table table-striped pad" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
                             <td></td> 
-                            <th>Prontuario</th>
                             <th>Nome</th>
                             <td></td> 
-                            <th>Curso</th>
+                            <th>E-mail</th>
                             <th class="actions">Ações</th>
                          </tr>
                     </thead>
                     <tbody>
-                        {% for a in aluno %}
+                        {% for o in orientador %}
                             <tr>
                                 <td></td> 
-                                <td>{{ a.prontuario }}</td>
-                                <td>{{ a.nome }}</td>
+                                <td>{{ o.nome }}</td>
                                 <td></td> 
-                                <td>{{ a.curso }}</td>                         
+                                <td>{{ o.email }}</td>                         
                                 <td class="actions">
-                                    <a class="btn btn-success btn-xs" href="{{ path('aluno.find', {'id': a.prontuario}) }}">Visualizar</a>
-                                    <a class="btn btn-warning btn-xs" href="{{ path('aluno.edit', {'id': a.prontuario}) }}">Editar</a>
-                                    <a class="btn btn-danger btn-xs"  href="{{ path('aluno.delete', {'id': a.prontuario}) }}" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                                    <a class="btn btn-success btn-xs" href="{{ path('orientador.find', {'id': o.id}) }}">Visualizar</a>
+                                    <a class="btn btn-warning btn-xs" href="{{ path('orientador.edit', {'id': o.id}) }}">Editar</a>
+                                    <a class="btn btn-danger btn-xs"  href="{{ path('orientador.delete', {'id': o.id}) }}" data-toggle="modal" data-target="#delete-modal">Excluir</a>
                                 </td>
                             </tr>
                         {% endfor %}
