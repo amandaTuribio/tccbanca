@@ -4,15 +4,116 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {{ include('common/import_assets.html.twig') }}
         <title>Cadastro TCC</title>
+
+
+        <script>
+
+            /*** Pesquisar Alunos **/
+
+            function carregaAlunos() {
+                $(document).ready(function () {
+                    $.ajax({
+                        url: "/tcc/pesquisa_alunos_curso",
+                        data: {curso: $('#curso').val()},
+                        cache: false,
+                        type: "POST",
+                        dataType: "json",
+                        beforeSend: function () {
+                            $('#listaAlunos').empty();
+                            $('#msg').html('Carregando Alunos ...');
+                        },
+                        success: function (json) {
+                            console.log(json);
+                            for (var i = 0; i < json.length; i++) {
+                                $('#listaAlunos').append('<option id="conteudo" value="' + json[i].id + '">' + json[i].id + "-" + json[i].nome + '</option>');
+                            }
+                            if (json.length > 0) {
+                                $('#msg').html('Alunos Encontrados');
+                            } else {
+                                $('#msg').html('Nenhum Aluno Encontrado');
+                            }
+
+                        }
+                    });
+                });
+            }
+
+
+            /** Submit Form **/
+            $(document).ready(function () {
+                $("#btnForm").click(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/tccs/store",
+                        dataType: 'json',
+                        data: $('#formTCC').serialize(),
+                        cache: false,
+                        success: function (result) {
+                            if(result.status === 'saved'){
+                                console.log("TCC Salvo");
+                                alert(result);
+                            }else{
+                                console.log("TCC Já Cadastrado");
+                                alert(result);
+                            }
+                        }, error: function (result) {
+                            console.log(result);
+                            alert("Deu Errrado");
+                        }
+                    });
+                    return false;
+                });
+            });
+        </script>
     </head>
 
     {{ include('common/navbar.html.twig') }}
     <body>
-        <form>
+
+        <div class="container">
+            <h1>Cadastro TCC</h1>
+            <form id="#formTCC">
+                <div class="form-group">
+                    <label for="titulo" class="control-label">Titulo:</label>
+                    <input type="text" class="form-control" name="titulo" required="Por favor preencha o titulo">
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label"  for="orientador">Orientador:</label>
+                    <select name="orientador" class="form-control" required="Por favor escolha um orientador">
+                        {% for orientador in orientadores %}
+                            <option value="{{orientador.id}}">{{orientador.nome}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label"  for="curso">Curso:</label>
+                    <select id="curso" name="curso" class="form-control" onchange="carregaAlunos()" required="Por favor escolha um curso">
+                        {% for curso in cursos %}
+                            <option value="{{curso.id}}">{{curso.nome}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
 
-        </form>
+
+                <div class="form-group">
+                    <p id="msg" class="text-info"></p>
+                    <select id="listaAlunos" class="form-control" name="aluno" size="5" multiple>
+                    </select>
+                </div>
+
+                <div class="form-group" id="msg_form">
+                </div>
+
+                <div class="col-sm-offset-2">
+                    <input id="btnForm" type="submit" class="btn btn-success" value="Enviar">
+                </div>
+
+            </form>
+        </div>
     </body>
 
-      {{ include('common/footer.html.twig') }}
+    {{ include('common/footer.html.twig') }}
 </html>

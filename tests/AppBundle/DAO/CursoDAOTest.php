@@ -9,6 +9,7 @@
 namespace Tests\AppBundle\DAO;
 
 use AppBundle\DAO\CursoDAO;
+use AppBundle\Entity\Aluno;
 use AppBundle\Entity\Curso;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -62,6 +63,8 @@ class CursoDAOTest extends KernelTestCase {
         $cursos = $this->cursoDAO->listarTodos();
         $this->assertNotNull($cursos);
     }
+    
+  
 
     protected function tearDown() {
 
