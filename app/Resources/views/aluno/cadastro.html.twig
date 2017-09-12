@@ -7,6 +7,19 @@
     </head>
     {{ include('common/navbar.html.twig') }}
     <body>
+    <br>
+
+      {% if errors %}
+      <div class="danger">
+        <ul>
+        {% for error in errors %}
+          <li>{{ error.getmessage()}}</li>
+        {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+
       <h2 align="center">Cadastro de Aluno</h2>
         <div class="container">
           <form action="/aluno/store" method="post">

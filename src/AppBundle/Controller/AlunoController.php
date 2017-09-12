@@ -33,33 +33,54 @@ class AlunoController extends Controller{
         ));
     }
 
+    public function makeForm($aluno){
+        $form = $this->createFormBuilder($aluno)
+            ->add('nome', TextType::class,
+                array('attr' => 
+                    array('class'=>'form-control', 'placeholder'=> 'Digite o nome completo do Aluno')))
+            ->add('prontuario', TextType::class,
+                array('attr' => array('class'=>'form-control', 'placeholder'=> 'Digite o prontuario do Aluno. Ex.:Gu1543234')))
+            ->add('email', EmailType::class,
+                array('attr' => array('class'=>'form-control', 'placeholder'=> 'Digite o e-mail do Aluno')))
+            ->add('tcc', ChoiceType::class, 
+                array('attr' => 
+                    array('class'=>'form-control'), "choices" => $this->buildeTcc()))
+            ->add('curso', ChoiceType::class,
+                array('attr' => 
+                    array('class'=>'form-control'), "choices" => $this->buildeCurso()))
+            ->add('save', SubmitType::class, 
+                array('label' => 'Inserir','attr' =>
+                 array('class'=>' btn btn-outline-success btn-lg btn-block')))
+            ->getForm();    
+            return  $form->createView();
+    }
+
+
     /**
      * @Route("/aluno/cadastro")
      */
     public function cadastro(){
-
-        $form = $this->createFormBuilder($this->aluno)
-            ->add('nome', TextType::class,array('attr' => array('class'=>'form-control', 'placeholder'=> 'Digite o nome completo do Aluno', 'onclick' => "Validate();return false;", 'id'=> "data_id")))
-
-            ->add('prontuario', TextType::class,array('attr' => array('class'=>'form-control', 'placeholder'=> 'Digite o prontuario do Aluno. Ex.:Gu1543234')))
-            ->add('email', EmailType::class,array('attr' => array('class'=>'form-control', 'placeholder'=> 'Digite o e-mail do Aluno')))
-            ->add('tcc', ChoiceType::class, array(
-                'attr' => array('class'=>'form-control'),
-                "choices" => $this->buildeTcc()))
-
-            ->add('curso', ChoiceType::class, array(
-                'attr' => array('class'=>'form-control'),
-                "choices" => $this->buildeCurso()))
-
-
-            ->add('save', SubmitType::class, array('label' => 'Inserir','attr' => array('class'=>' btn btn-outline-success btn-lg btn-block')))
-            ->getForm();
-                   
-        return $this->render('aluno/cadastro.html.twig', array(
-            'form' => $form->createView(),
+        $form = $this->makeForm($this->aluno);
+            return $this->render('aluno/cadastro.html.twig', array(
+            'form' => $form,
+            'errors' => null,
         ));
     }
  
+    public function validaAluno($aluno){
+        $validator = $this->get('validator');
+        $errors = $validator->validate($aluno) ;
+        if (count($errors) > 0) {
+            foreach ($errors as $error){
+                //var_dump($error);
+                //$errorsA[] = $error->getmessage();propertyPath
+                $errorsA[] = $error;
+            }
+            return $errorsA;
+        }
+        return null;
+    }
+
     /**
      * @Route("/aluno/store")
      */
@@ -67,15 +88,20 @@ class AlunoController extends Controller{
         $dataForm = $request->request->get('form');  
         $em = $this->getDoctrine()->getManager();
         $curso = (int) $dataForm['curso'];
-    
         $this->aluno = new Aluno($dataForm['prontuario'], $dataForm['nome'], $dataForm['email'], $curso);
-        
         $this->aluno->setTcc((int) $dataForm['tcc']);
         
-        $dao = new AlunoDAO($em);    
-        var_dump($this->aluno);
-        $dao->inserir($this->aluno);
+        $valid = $this->validaAluno($this->aluno);
 
+        if($valid){
+            $form = $this->makeForm($this->aluno);
+            return $this->render('aluno/cadastro.html.twig', array(
+            'form' => $form,
+            'errors' => $valid,
+        ));
+        }
+        $dao = new AlunoDAO($em);    
+        $dao->inserir($this->aluno);
         return $this->redirectToRoute('aluno.listall');
     }
     
@@ -102,7 +128,16 @@ class AlunoController extends Controller{
         $dao->remover($aluno);
         return $this->redirectToRoute('aluno.listall');
     }
-    
+
+    /**
+     * @Route("/aluno/validaProntuario/{id}", name="aluno.validaProntuario")
+     */
+    public function validaProntuario($id){
+        $em = $this->getDoctrine()->getManager();
+        $dao = new AlunoDAO($em);
+        $aluno = $dao->pesquisar($id);
+        return $aluno ;
+    }
     
     /**
      * @Route("/aluno/update/{id}", name="aluno.update")
@@ -126,20 +161,11 @@ class AlunoController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $dao = new AlunoDAO($em);
         $aluno = $dao->pesquisar($id);
-
-        $form = $this->createFormBuilder($aluno)
-            ->add('nome', TextType::class,array('attr' => array('class'=>'form-control', 'placeholder'=> 'Digite o nome completo do Aluno')))
-            ->add('prontuario', TextType::class,array('attr' => array('class'=>'form-control', 'placeholder'=> 'Digite o prontuario do Aluno. Ex.:Gu1543234')))
-
-            ->add('email', EmailType::class,array('attr' => array('class'=>'form-control', 'placeholder'=> 'Digite o e-mail do Aluno')))
-            ->add('curso', NumberType::class,array('attr' => array('class'=>'form-control', 'placeholder'=> 'do Aluno')))
-            ->add('tcc', NumberType::class,array('attr' => array('class'=>'form-control', 'placeholder'=> 'do Aluno')))
-            ->add('save', SubmitType::class, array('label' => 'Editar','attr' => array('class'=>' btn btn-outline-success btn-lg btn-block')))
-            ->getForm();
-                   
+        $form = $this->makeForm($aluno);
         return $this->render('aluno/edit.html.twig', array(
-            'form' => $form->createView(),
+            'form' => $form,
             'aluno' => $aluno,
+            'errors' => null
         ));
     }
 

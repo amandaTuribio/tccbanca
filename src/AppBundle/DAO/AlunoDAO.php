@@ -31,5 +31,13 @@ class AlunoDAO extends GenericDAO {
         $alunos = $repository->findAll();
         return $alunos;
     }
+
+    public function validarProntuario($id) {
+        $entity = $this->entityManager->getRepository(Aluno::class)->find($id);
+        if($entity){
+            return true;
+        }
+        return false;
+    }
     
 }
